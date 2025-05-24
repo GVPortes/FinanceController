@@ -1,15 +1,18 @@
-
-import './App.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import NotFound from './pages/NotFound';
 
 function App() {
-
   return (
-    <>
-      <div>
-        <h1>Controle de Finanças</h1>
-      </div>
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
