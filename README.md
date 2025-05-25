@@ -1,1 +1,25 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/ziFB7zin)
+# Sistema de Controle Financeiro Pessoal
+
+## 🎯 Descrição
+Projeto da disciplina de Desenvolvimento Web Front-End com React, criando um sistema de controle financeiro.
+
+## 🚀 Tecnologias
+- React
+- React Router DOM
+- Context API
+- Bootstrap
+- Chart.js 
+
+## 🧩 Funcionalidade 'inovadora':
+Gráficos de gastos com Chart.js 
+
+## 👥 Equipe
+- Gabriel Vieira Portes
+- Antônio Crivellari
+- Lucas Lopes De Souza
+
+
+## 📌 Como Rodar:
+
+npm install
+npm run dev

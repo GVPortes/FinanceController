@@ -10,10 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "bootstrap": "^5.3.6",
+    "@heroui/react": "^2.7.8",
+    "@tailwindcss/vite": "^4.1.7",
+    "framer-motion": "^12.12.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-router-dom": "^7.6.0"
+    "react-router-dom": "^7.6.0",
+    "tailwindcss": "^4.1.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
