@@ -20,4 +20,5 @@ Funcionalidade que permite o usuario planejar objetivos como aposentadoria, fina
 - Lucas Lopes De Souza
 
 ## 📌 Como Rodar:
+npm install
 npm run dev
