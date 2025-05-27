@@ -8,7 +8,7 @@ const ViewHome = () => {
         <div>
             <Navbar className="bg-[#157347]">
                 <Container>
-                    <Navbar.Brand href="#home" className='text-white'>Controle de Finanças</Navbar.Brand>
+                    <Navbar.Brand className='text-white'>Controle de Finanças</Navbar.Brand>
                     <Navbar.Toggle />
                     <Navbar.Collapse className="justify-content-end">
                     <Navbar.Text className='text-white'>
