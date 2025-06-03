@@ -1,25 +1,13 @@
-import Container from 'react-bootstrap/Container';
-import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { Link } from "react-router-dom";
+import CabecalhoHome from '../components/CabecalhoHome';
 
 const ViewLogin = () => {
 
 
     return (
         <div>
-            <Navbar className="bg-[#157347]">
-                <Container>
-                    <Navbar.Brand as={Link} to="/" className='text-white'>Controle de Finanças</Navbar.Brand>
-                    <Navbar.Toggle />
-                    <Navbar.Collapse className="justify-content-end">
-                    <Navbar.Text className='text-white'>
-                        Ajuste sua vida financeira conosco
-                    </Navbar.Text>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
+            <CabecalhoHome />
             <div className='flex flex-col items-center justify-center h-[40rem] bg-gray-200'>
                 <Form className='w-96 flex flex-col items-center justify-center bg-gray-300 h-[20rem] rounded-4xl'>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
