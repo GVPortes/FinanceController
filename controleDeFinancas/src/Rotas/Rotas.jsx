@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ViewLogin from '../View/ViewLogin';
 import ViewHome from '../View/ViewHome';
+import ViewCadastro from '../View/ViewCadastro';
 
 function Rotas() {
   return (
@@ -11,6 +12,9 @@ function Rotas() {
           }/>
         <Route path="/login" element={
           <ViewLogin />
+          }/>
+        <Route path="/cadastro" element={
+          <ViewCadastro />
           }/>
       </Routes>
     </BrowserRouter>

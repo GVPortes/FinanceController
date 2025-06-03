@@ -22,6 +22,8 @@ const ViewHome = () => {
                     <p className='text-4xl'>Bem vindo ao controle de finanças</p>
                     <p className='text-2xl'>Faça seu login!</p>
                     <Link to="/login" className='bg-[#157347] p-2.5 text-white'>Logar</Link>
+                    <p className='text-2xl'>Cadastre aqui!</p>
+                    <Link to="/cadastro" className='bg-[#157347] p-2.5 text-white'>Cadastro</Link>
                 </div>
             </div>
         </div>
