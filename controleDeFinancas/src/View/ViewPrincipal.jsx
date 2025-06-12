@@ -1,6 +1,7 @@
 import { useState } from "react"
 import CabecalhoPrincipal from "../Components/CabecalhoPrincipal"
 import Button from "react-bootstrap/esm/Button"
+import FormularioReceitas from "../Components/FormularioReceitas"
 
 
 const ViewPrincipal = () => {
@@ -20,7 +21,7 @@ const ViewPrincipal = () => {
                         <Button variant="success" type="submit">
                             Adicionar receita
                         </Button>
-                        <Button variant="success" type="submit">
+                        <Button variant="success" type="submit" data-bs-toggle="modal" data-bs-target={<FormularioReceitas/>}>
                             Adicionar despesa
                         </Button>
                     </div>
