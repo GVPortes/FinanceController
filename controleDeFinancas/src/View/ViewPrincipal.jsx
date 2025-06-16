@@ -1,8 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CabecalhoPrincipal from "../Components/CabecalhoPrincipal";
 import Button from "react-bootstrap/Button";
 import HistoricoDeReceitas from "../Components/HistoricoDeReceitas";
 import HistoricoDeDespesas from "../Components/HistoricoDeDespesas";
+import GraficoReceitas from "../Components/GraficoReceitas";
+import GraficoDespesas from "../Components/GraficoDespesas";
+import GraficoPizzaReceitas from "../Components/GraficoPizzaReceitas";
+import GraficoPizzaDespesas from "../Components/GraficoPizzaDespesas";
 
 const ViewPrincipal = () => {
     const [saldo, setSaldo] = useState(1000.0);
@@ -125,9 +129,19 @@ const ViewPrincipal = () => {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 ">
                         <HistoricoDeReceitas receitas={receitas}/>
                         <HistoricoDeDespesas despesas={despesas}/>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <GraficoReceitas receitas={receitas}/>
+                        <GraficoDespesas despesas={despesas}/>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <GraficoPizzaReceitas receitas={receitas}/>
+                        <GraficoPizzaDespesas despesas={despesas}/>
                     </div>
                 </div>
             </div>
