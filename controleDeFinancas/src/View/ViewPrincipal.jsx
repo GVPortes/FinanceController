@@ -1,25 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CabecalhoPrincipal from "../Components/CabecalhoPrincipal";
 import Button from "react-bootstrap/Button";
+import HistoricoDeReceitas from "../Components/HistoricoDeReceitas";
+import HistoricoDeDespesas from "../Components/HistoricoDeDespesas";
 
 const ViewPrincipal = () => {
     const [saldo, setSaldo] = useState(1000.0);
+    // localStorage.setItem('saldo', JSON.stringify(saldo))
     const [receitas, setReceitas] = useState([]);
+    // localStorage.setItem('receitas', JSON.stringify(receitas))
     const [despesas, setDespesas] = useState([]);
+    // localStorage.setItem('despesas', JSON.stringify(despesas))
 
     const [mostrarFormularioReceita, setMostrarFormularioReceita] = useState(false);
     const [nomeReceita, setNomeReceita] = useState('');
     const [valorReceita, setValorReceita] = useState('');
+    const [tipoReceita, setTipoReceita] = useState('');
 
     const [mostrarFormularioDespesa, setMostrarFormularioDespesa] = useState(false);
     const [nomeDespesa, setNomeDespesa] = useState('');
     const [valorDespesa, setValorDespesa] = useState('');
+    const [tipoDespesa, setTipoDespesa] = useState('');
+
 
     const adicionarReceita = () => {
         const valorNumerico = parseFloat(valorReceita);
         if (nomeReceita && !isNaN(valorNumerico) && valorNumerico > 0) {
             setSaldo(saldo + valorNumerico);
-            setReceitas([...receitas, { nome: nomeReceita, valor: valorNumerico }]);
+            setReceitas([...receitas, { nome: nomeReceita, valor: valorNumerico, tipo: tipoReceita}]);
+            // localStorage.setItem('saldo', JSON.stringify(saldo))
+            // localStorage.setItem('receitas', JSON.stringify(receitas))
             fecharFormularioReceita();
         } else {
             alert("Por favor, preencha o nome e um valor válido para a receita.");
@@ -36,7 +46,11 @@ const ViewPrincipal = () => {
         const valorNumerico = parseFloat(valorDespesa);
         if (nomeDespesa && !isNaN(valorNumerico) && valorNumerico > 0) {
             setSaldo(saldo - valorNumerico);
-            setDespesas([...despesas, { nome: nomeDespesa, valor: valorNumerico }]);
+            setDespesas([...despesas, { nome: nomeDespesa, valor: valorNumerico, tipo: tipoDespesa }]);
+            // localStorage.removeItem('saldo')
+            // localStorage.removeItem('despesas')
+            // localStorage.setItem('saldo', JSON.stringify(saldo))
+            // localStorage.setItem('despesas', JSON.stringify(despesas))
             fecharFormularioDespesa();
         } else {
             alert("Por favor, preencha o nome e um valor válido para a despesa.");
@@ -58,7 +72,7 @@ const ViewPrincipal = () => {
                         <div className="p-6 border-3 border-solid border-[#157347] bg-white rounded-lg shadow">
                             <legend className="text-lg font-bold text-gray-600">Saldo Atual</legend>
                             <p className="text-4xl font-bold text-gray-800 mt-2">
-                                {saldo.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                                {saldo}
                             </p>
                         </div>
 
@@ -75,8 +89,14 @@ const ViewPrincipal = () => {
                             {mostrarFormularioReceita && (
                                 <div className="flex flex-col gap-2 p-4 rounded-md bg-green-50 border border-green-200 mt-2">
                                     <h3 className="font-bold">Nova Receita</h3>
-                                    <input type="text" placeholder="Ex: Salário" value={nomeReceita} onChange={e => setNomeReceita(e.target.value)} className="border p-2 rounded" />
+                                    <input type="text" placeholder="Descrição" value={nomeReceita} onChange={e => setNomeReceita(e.target.value)} className="border p-2 rounded" />
                                     <input type="number" placeholder="Valor" value={valorReceita} onChange={e => setValorReceita(e.target.value)} className="border p-2 rounded" />
+                                    <select className="border p-2 rounded" onChange={e => setTipoReceita(e.target.value)}>
+                                        <option>Tipo</option>
+                                        <option value="Salario">Salario</option>
+                                        <option value="Tranferencias">Tranferencias</option>
+                                        <option value="Outros">Outros</option>
+                                    </select>
                                     <div className="flex gap-2 justify-end mt-2">
                                         <Button variant="outline-success" size="sm" onClick={adicionarReceita}>Salvar</Button>
                                         <Button variant="outline-secondary" size="sm" onClick={fecharFormularioReceita}>Cancelar</Button>
@@ -87,8 +107,15 @@ const ViewPrincipal = () => {
                             {mostrarFormularioDespesa && (
                                 <div className="flex flex-col gap-2 p-4 rounded-md bg-red-50 border border-red-200 mt-2">
                                     <h3 className="font-bold">Nova Despesa</h3>
-                                    <input type="text" placeholder="Ex: Aluguel" value={nomeDespesa} onChange={e => setNomeDespesa(e.target.value)} className="border p-2 rounded" />
+                                    <input type="text" placeholder="Descrição" value={nomeDespesa} onChange={e => setNomeDespesa(e.target.value)} className="border p-2 rounded" />
                                     <input type="number" placeholder="Valor" value={valorDespesa} onChange={e => setValorDespesa(e.target.value)} className="border p-2 rounded" />
+                                    <select className="border p-2 rounded" onChange={e => setTipoDespesa(e.target.value)}>
+                                        <option>Tipo</option>
+                                        <option value="Aluguel">Aluguel</option>
+                                        <option value="Luz/Agua">Luz/Agua</option>
+                                        <option value="Alimentação">Alimentação</option>
+                                        <option value="Outros">Outros</option>
+                                    </select>
                                     <div className="flex gap-2 justify-end mt-2">
                                         <Button variant="outline-danger" size="sm" onClick={adicionarDespesa}>Salvar</Button>
                                         <Button variant="outline-secondary" size="sm" onClick={fecharFormularioDespesa}>Cancelar</Button>
@@ -99,57 +126,8 @@ const ViewPrincipal = () => {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className="bg-white p-6 rounded-lg shadow">
-                            <h3 className="text-xl font-bold mb-4">Histórico de Receitas</h3>
-                            {receitas.length > 0 ? (
-                                <div className="overflow-x-auto">
-                                    <table className="w-full">
-                                        <thead className="bg-gray-100">
-                                            <tr>
-                                                <th className="p-3 text-left font-semibold">Descrição</th>
-                                                <th className="p-3 text-right font-semibold">Valor</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {receitas.map((item, index) => (
-                                                <tr key={index} className="border-b">
-                                                    <td className="p-3">{item.nome}</td>
-                                                    <td className="p-3 text-right text-green-600 font-medium">
-                                                        {item.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            ) : <p className="text-gray-500">Nenhuma receita adicionada ainda.</p>}
-                        </div>
-
-                        <div className="bg-white p-6 rounded-lg shadow">
-                            <h3 className="text-xl font-bold mb-4">Histórico de Despesas</h3>
-                            {despesas.length > 0 ? (
-                                <div className="overflow-x-auto">
-                                    <table className="w-full">
-                                        <thead className="bg-gray-100">
-                                            <tr>
-                                                <th className="p-3 text-left font-semibold">Descrição</th>
-                                                <th className="p-3 text-right font-semibold">Valor</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {despesas.map((item, index) => (
-                                                <tr key={index} className="border-b">
-                                                    <td className="p-3">{item.nome}</td>
-                                                    <td className="p-3 text-right text-red-600 font-medium">
-                                                        {item.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            ) : <p className="text-gray-500">Nenhuma despesa adicionada ainda.</p>}
-                        </div>
+                        <HistoricoDeReceitas receitas={receitas}/>
+                        <HistoricoDeDespesas despesas={despesas}/>
                     </div>
                 </div>
             </div>
