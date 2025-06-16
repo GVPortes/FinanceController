@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import CabecalhoHome from '../components/CabecalhoHome';
 import { useState } from 'react';
 import { useAuth } from '../context/AuthProvider';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 const ViewLogin = () => {
     const [nome, setNome] = useState();
@@ -14,10 +14,9 @@ const ViewLogin = () => {
     const navigate = useNavigate();
 
     const logar = () => {
-        if (login(nome, senha)) { 
+        if (login(nome, senha)) {
             setNome("")
             setSenha("")
-            setMensagem("")
             navigate("/principal")
         }
         else {
@@ -31,16 +30,16 @@ const ViewLogin = () => {
                 <Form className='w-96 flex flex-col items-center justify-center bg-gray-300 h-[20rem] rounded-4xl'>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Usuario</Form.Label>
-                        <Form.Control type="text" value={nome} onChange={(e) => setNome (e.target.value)}/>
+                        <Form.Control type="text" value={nome} onChange={(e) => setNome(e.target.value)}/>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label>Senha</Form.Label>
-                        <Form.Control type="password" value={senha} onChange={(e) => setSenha (e.target.value)}/>
+                        <Form.Control type="password" value={senha} onChange={(e) => setSenha(e.target.value)}/>
                     </Form.Group>
                     <Form.Text className="text-muted">
                         {mensagem}
                     </Form.Text>
-                    <Button variant="success" type="submit" onclick={logar}>
+                    <Button variant="success" onClick={logar}>
                         Logar
                     </Button>
                 </Form>

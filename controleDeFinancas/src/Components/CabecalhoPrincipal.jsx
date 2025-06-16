@@ -1,10 +1,18 @@
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from '../context/AuthProvider';
 
 const CabecalhoPrincipal = () => {
 
+    const {logout} = useAuth();
+
+    const navigate = useNavigate();
+    const sair = () => {
+        logout();
+        navigate("/login");
+    }
 
     return(
         <>
@@ -21,7 +29,7 @@ const CabecalhoPrincipal = () => {
                         <Nav.Link as={Link} to="/despesas">Despesas</Nav.Link>
                         <Nav.Link>Relatorios</Nav.Link>
                         <Nav.Link>Minha Conta</Nav.Link>
-                        <Nav.Link >Sair</Nav.Link>
+                        <Nav.Link onClick={sair}>Sair</Nav.Link>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
