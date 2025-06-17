@@ -7,15 +7,21 @@ const GraficoPizzaReceitas = ({receitas}) => {
     const [valorTransferencias, setValorTransferencias] = useState(0)
     const [valorOutros, setValorOutros] = useState(0)
     useEffect(()=>{
+        let salario = 0
+        let transferencias = 0
+        let outros = 0
+
+
+
         receitas.forEach(item => {
             if (item.tipo == "Salario") {
-                setValorSalario(valorSalario + item.valor)
+                setValorSalario(salario += item.valor)
             }
             if (item.tipo == "Tranferencias") {
-                setValorTransferencias(valorTransferencias + item.valor)
+                setValorTransferencias(transferencias += item.valor)
             }
             if (item.tipo == "Outros") {
-                setValorOutros(valorOutros + item.valor)
+                setValorOutros(outros += item.valor)
             }
         });
     },[receitas])
