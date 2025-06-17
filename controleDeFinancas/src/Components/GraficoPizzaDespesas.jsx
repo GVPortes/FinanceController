@@ -10,18 +10,25 @@ const GraficoPizzaDespesas = ({despesas}) => {
     const [valorOutros, setValorOutros] = useState(0)
 
     useEffect(()=>{
+        
+
+        let aluguel = 0
+        let luzAgua = 0
+        let alimentacao = 0
+        let outros = 0
+
         despesas.forEach(item => {
             if (item.tipo == "Aluguel") {
-                setValorAluguel(valorAluguel + item.valor)
+                setValorAluguel(aluguel += item.valor)
             }
             if (item.tipo == "Luz/Agua") {
-                setValorLuzAgua(valorLuzAgua + item.valor)
+                setValorLuzAgua(luzAgua + item.valor)
             }
             if (item.tipo == "Alimentação") {
-                setValorAlimentacao(valorAlimentacao + item.valor)
+                setValorAlimentacao(alimentacao + item.valor)
             }
             if (item.tipo == "Outros") {
-                setValorOutros(valorOutros + item.valor)
+                setValorOutros(outros + item.valor)
             }
         });
     },[despesas])
