@@ -1,4 +1,4 @@
-import { createContext, useContext, useState} from "react";
+import { createContext, useContext, useEffect, useState} from "react";
 
 const AuthContext = createContext()
 
@@ -9,13 +9,18 @@ export const useAuth = () => {
 }
 
 export const AuthProvider = ( {children} )=>{
+    const [user, setUser] = useState(() => {
+        return JSON.parse(localStorage.getItem("user")) || null
+    })
 
+    useEffect(()=>{
+        localStorage.setItem("user", JSON.stringify(user) )
+    },[user])
 
-    const [logado, setlogado] = useState(false)
-    const [user, setUser] = useState(null)
-    const login = (user, senha) => {
-        if (senha === "123456" && user === "admin") {
-            setUser({nome: "admin", id: "1"})
+    const login = (nomeUser, senha) => {
+        if (senha === "123456" && nomeUser === "admin") {
+            let u = {nome: "admin", id: "1"}
+            setUser(u)
             return true
         }
         else {
@@ -30,8 +35,16 @@ export const AuthProvider = ( {children} )=>{
         setUser(null)
     }
 
+    const verificaLogin = () => {
+        if (JSON.parse(localStorage.getItem("user")) == null) {
+            return true
+        } else {
+            return false
+        }
+    }
+
     return (
-        <AuthContext.Provider value={{user, logado, logout, login}}>
+        <AuthContext.Provider value={{verificaLogin, logout, login}}>
             {children}
         </AuthContext.Provider>
     )

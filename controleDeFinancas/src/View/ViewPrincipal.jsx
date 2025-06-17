@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CabecalhoPrincipal from "../Components/CabecalhoPrincipal";
 import Button from "react-bootstrap/Button";
 import HistoricoDeReceitas from "../Components/HistoricoDeReceitas";
@@ -7,14 +7,48 @@ import GraficoReceitas from "../Components/GraficoReceitas";
 import GraficoDespesas from "../Components/GraficoDespesas";
 import GraficoPizzaReceitas from "../Components/GraficoPizzaReceitas";
 import GraficoPizzaDespesas from "../Components/GraficoPizzaDespesas";
+import { useAuth } from "../context/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const ViewPrincipal = () => {
-    const [saldo, setSaldo] = useState(1000.0);
-    // localStorage.setItem('saldo', JSON.stringify(saldo))
-    const [receitas, setReceitas] = useState([]);
-    // localStorage.setItem('receitas', JSON.stringify(receitas))
-    const [despesas, setDespesas] = useState([]);
-    // localStorage.setItem('despesas', JSON.stringify(despesas))
+
+    const {verificaLogin} = useAuth()
+    const navigate = useNavigate()
+
+    useEffect(()=>{
+        if (verificaLogin()) {
+            navigate("/")
+        } else {
+            localStorage.setItem('saldo', 0)
+            localStorage.setItem('receitas', JSON.stringify([]))
+            localStorage.setItem('despesas', JSON.stringify([]))
+        }
+    },[]);
+
+    const [saldo, setSaldo] = useState(() => {
+        return parseFloat(localStorage.getItem('saldo')) || 0;
+    });
+    const [receitas, setReceitas] = useState(() => {
+        return JSON.parse(localStorage.getItem('receitas')) || [];
+    });
+    const [despesas, setDespesas] = useState(() => {
+        return JSON.parse(localStorage.getItem('despesas')) || [];
+    });
+
+
+    
+
+    useEffect(()=>{
+        localStorage.setItem('saldo', saldo)
+    },[saldo]);
+
+    useEffect(()=>{
+        localStorage.setItem('receitas', JSON.stringify(receitas))
+    },[receitas]);
+
+    useEffect(()=>{
+        localStorage.setItem('despesas', JSON.stringify(despesas))
+    },[despesas]);
 
     const [mostrarFormularioReceita, setMostrarFormularioReceita] = useState(false);
     const [nomeReceita, setNomeReceita] = useState('');
@@ -32,8 +66,6 @@ const ViewPrincipal = () => {
         if (nomeReceita && !isNaN(valorNumerico) && valorNumerico > 0) {
             setSaldo(saldo + valorNumerico);
             setReceitas([...receitas, { nome: nomeReceita, valor: valorNumerico, tipo: tipoReceita}]);
-            // localStorage.setItem('saldo', JSON.stringify(saldo))
-            // localStorage.setItem('receitas', JSON.stringify(receitas))
             fecharFormularioReceita();
         } else {
             alert("Por favor, preencha o nome e um valor válido para a receita.");
@@ -51,10 +83,6 @@ const ViewPrincipal = () => {
         if (nomeDespesa && !isNaN(valorNumerico) && valorNumerico > 0) {
             setSaldo(saldo - valorNumerico);
             setDespesas([...despesas, { nome: nomeDespesa, valor: valorNumerico, tipo: tipoDespesa }]);
-            // localStorage.removeItem('saldo')
-            // localStorage.removeItem('despesas')
-            // localStorage.setItem('saldo', JSON.stringify(saldo))
-            // localStorage.setItem('despesas', JSON.stringify(despesas))
             fecharFormularioDespesa();
         } else {
             alert("Por favor, preencha o nome e um valor válido para a despesa.");
