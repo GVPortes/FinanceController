@@ -38,4 +38,4 @@ const CabecalhoPrincipal = () => {
 }
 
 export default CabecalhoPrincipal
-// teste
+// This code defines a main header component for a financial control application using React and React Bootstrap.
