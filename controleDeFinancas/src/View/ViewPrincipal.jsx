@@ -9,7 +9,7 @@ import GraficoPizzaReceitas from "../Components/GraficoPizzaReceitas";
 import GraficoPizzaDespesas from "../Components/GraficoPizzaDespesas";
 import { useAuth } from "../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
-import { buscaUserAPI, getDespesas, getReceitas } from "../service/Services";
+import { buscaUserAPI, getDespesas, getReceitas, saveDespesa, saveReceita } from "../service/Services";
 
 const ViewPrincipal = () => {
 
@@ -20,36 +20,79 @@ const ViewPrincipal = () => {
     const [receitas, setReceitas] = useState([]);
     const [despesas, setDespesas] = useState([]);
 
-    useEffect(() => {
-    const carregarDados = async () => {
-        if (user == null) {
-            navigate("/login");
-        } else {
-            let receitasBuscadas = await getReceitas(user.id, user.token);
-            let despesasBuscadas = await getDespesas(user.id, user.token);
-            let userBuscado = await buscaUserAPI(user.nome, user.token)
-            
-            setSaldo(userBuscado[0].saldo);
-            setReceitas(receitasBuscadas);
-            setDespesas(despesasBuscadas);
-        }
-    };
 
-    carregarDados();
-}, []);
+    useEffect(() => {
+        const carregarDados = async () => {
+            if (user == null) {
+                navigate("/login");
+            } else {
+                let receitasBuscadas = await getReceitas(user.id, user.token);
+                let despesasBuscadas = await getDespesas(user.id, user.token);
+                let userBuscado = await buscaUserAPI(user.nome, user.token)
+                let saldo = userBuscado[0].saldo
+
+                receitasBuscadas.forEach(item => {
+                    saldo += item.valor
+                });
+
+                despesasBuscadas.forEach(item => {
+                    saldo -= item.valor
+                });
+
+                setSaldo(saldo);
+                setReceitas(receitasBuscadas);
+                setDespesas(despesasBuscadas);
+            }
+        };
+
+        carregarDados();
+    }, []);
+
+    const carregarDados = async () => {
+        let receitasBuscadas = await getReceitas(user.id, user.token);
+        let despesasBuscadas = await getDespesas(user.id, user.token);
+        let userBuscado = await buscaUserAPI(user.nome, user.token)
+        let saldo = userBuscado[0].saldo
+
+        receitasBuscadas.forEach(item => {
+            saldo += item.valor
+        });
+
+        despesasBuscadas.forEach(item => {
+            saldo -= item.valor
+        });
+
+        setSaldo(saldo);
+        setReceitas(receitasBuscadas);
+        setDespesas(despesasBuscadas);
+    };
 
     const [mostrarFormularioReceita, setMostrarFormularioReceita] = useState(false);
     const [nomeReceita, setNomeReceita] = useState('');
     const [valorReceita, setValorReceita] = useState('');
     const [tipoReceita, setTipoReceita] = useState('');
+    const [receita, setReceita] = useState({
+        "id": 1,
+        "descricao": "",
+        "valor": 0,
+        "tipo": "",
+        "idUser": 0
+    })
 
     const [mostrarFormularioDespesa, setMostrarFormularioDespesa] = useState(false);
     const [nomeDespesa, setNomeDespesa] = useState('');
     const [valorDespesa, setValorDespesa] = useState('');
     const [tipoDespesa, setTipoDespesa] = useState('');
+    const [despesa, setDesepesa] = useState({
+        "id": 1,
+        "descricao": "",
+        "valor": 0,
+        "tipo": "",
+        "idUser": 0
+    })
 
 
-    const adicionarReceita = () => {
+    const adicionarReceita = async () => {
         const valorNumerico = parseFloat(valorReceita);
         if (nomeReceita && !isNaN(valorNumerico) && valorNumerico > 0) {
             setSaldo(saldo + valorNumerico);
@@ -58,6 +101,15 @@ const ViewPrincipal = () => {
         } else {
             alert("Por favor, preencha o nome e um valor válido para a receita.");
         }
+        // setReceita({...receita, "idUser": user.id})
+        // const valorNumerico = parseFloat(receita.valor);
+        // if (receita.descricao && !isNaN(valorNumerico) && valorNumerico > 0) {
+        //     await saveReceita(receita, user.token)
+        //     carregarDados()
+        //     fecharFormularioReceita();
+        // } else {
+        //     alert("Por favor, preencha o nome e um valor válido para a receita.");
+        // }
     };
 
     const fecharFormularioReceita = () => {
@@ -66,7 +118,7 @@ const ViewPrincipal = () => {
         setValorReceita('');
     };
 
-    const adicionarDespesa = () => {
+    const adicionarDespesa = async () => {
         const valorNumerico = parseFloat(valorDespesa);
         if (nomeDespesa && !isNaN(valorNumerico) && valorNumerico > 0) {
             setSaldo(saldo - valorNumerico);
@@ -75,6 +127,15 @@ const ViewPrincipal = () => {
         } else {
             alert("Por favor, preencha o nome e um valor válido para a despesa.");
         }
+        // setDesepesa({...despesa, "idUser": user.id})
+        // const valorNumerico = parseFloat(despesa.valor);
+        // if (despesa.descricao && !isNaN(valorNumerico) && valorNumerico > 0) {
+        //     await saveDespesa(despesa, user.token)
+        //     carregarDados()
+        //     fecharFormularioReceita();
+        // } else {
+        //     alert("Por favor, preencha o nome e um valor válido para a receita.");
+        // }
     };
 
     const fecharFormularioDespesa = () => {
@@ -117,6 +178,14 @@ const ViewPrincipal = () => {
                                         <option value="Tranferencias">Tranferencias</option>
                                         <option value="Outros">Outros</option>
                                     </select>
+                                    {/* <input type="text" placeholder="Descrição" value={receita.descricao} onChange={(e) => {setReceita({...receita, "descricao": e.target.value})}} className="border p-2 rounded" />
+                                    <input type="number" placeholder="Valor" value={receita.valor} onChange={(e) => {setReceita({...receita, "valor": e.target.value})}} className="border p-2 rounded" />
+                                    <select className="border p-2 rounded" value={receita.tipo} onChange={(e) => {setReceita({...receita, "tipo": e.target.value})}}>
+                                        <option>Tipo</option>
+                                        <option value="Salario">Salario</option>
+                                        <option value="Tranferencias">Tranferencias</option>
+                                        <option value="Outros">Outros</option>
+                                    </select> */}
                                     <div className="flex gap-2 justify-end mt-2">
                                         <Button variant="outline-success" size="sm" onClick={adicionarReceita}>Salvar</Button>
                                         <Button variant="outline-secondary" size="sm" onClick={fecharFormularioReceita}>Cancelar</Button>
@@ -136,6 +205,15 @@ const ViewPrincipal = () => {
                                         <option value="Alimentação">Alimentação</option>
                                         <option value="Outros">Outros</option>
                                     </select>
+                                    {/* <input type="text" placeholder="Descrição" value={despesa.descricao} onChange={(e) => {setDesepesa({...despesa, "descricao": e.target.value})}} className="border p-2 rounded" />
+                                    <input type="number" placeholder="Valor" value={despesa.valor} onChange={(e) => {setDesepesa({...despesa, "valor": e.target.value})}} className="border p-2 rounded" />
+                                    <select className="border p-2 rounded" value={despesa.tipo} onChange={(e) => {setDesepesa({...despesa, "tipo": e.target.value})}}>
+                                        <option>Tipo</option>
+                                        <option value="Aluguel">Aluguel</option>
+                                        <option value="Luz/Agua">Luz/Agua</option>
+                                        <option value="Alimentação">Alimentação</option>
+                                        <option value="Outros">Outros</option>
+                                    </select> */}
                                     <div className="flex gap-2 justify-end mt-2">
                                         <Button variant="outline-danger" size="sm" onClick={adicionarDespesa}>Salvar</Button>
                                         <Button variant="outline-secondary" size="sm" onClick={fecharFormularioDespesa}>Cancelar</Button>

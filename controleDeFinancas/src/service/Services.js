@@ -87,7 +87,7 @@ export const getDespesas = async (idUsuario, token)=>{
 
 }
 
-export const setReceita = async (data, token)=>{
+export const saveReceita = async (data, token)=>{
     let headersList = {
     "Accept": "*/*",
     "User-Agent": "Thunder Client (https://www.thunderclient.com)",
@@ -105,7 +105,7 @@ export const setReceita = async (data, token)=>{
 
 }
 
-export const setDespesa = async (data, token)=>{
+export const saveDespesa = async (data, token)=>{
     let headersList = {
     "Accept": "*/*",
     "User-Agent": "Thunder Client (https://www.thunderclient.com)",
@@ -114,6 +114,23 @@ export const setDespesa = async (data, token)=>{
     }
 
     let response = await fetch(`${URL}/despesas`, { 
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: headersList
+    });
+
+    return await response.text();
+}
+
+export const saveUser = async (data, token)=>{
+    let headersList = {
+    "Accept": "*/*",
+    "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+    "Authorization": `Bearer ${token}`,
+    "Content-Type": "application/json"
+    }
+
+    let response = await fetch(`${URL}/users`, { 
         method: "POST",
         body: JSON.stringify(data),
         headers: headersList
