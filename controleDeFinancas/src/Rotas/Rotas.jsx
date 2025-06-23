@@ -3,9 +3,8 @@ import ViewLogin from '../View/ViewLogin';
 import ViewHome from '../View/ViewHome';
 import ViewCadastro from '../View/ViewCadastro';
 import ViewPrincipal from '../View/ViewPrincipal';
-import ViewReceitas from '../View/ViewReceitas';
-import ViewDespesas from '../View/ViewDespesas';
 import { AuthProvider } from '../context/AuthProvider';
+import ViewSimulacao from '../View/ViewSimulacao';
 
 function Rotas() {
   return (
@@ -24,11 +23,8 @@ function Rotas() {
           <Route path="/principal" element={
             <ViewPrincipal />
             }/>
-          <Route path="/receitas" element={
-            <ViewReceitas />
-            }/>
-          <Route path="/despesas" element={
-            <ViewDespesas />
+          <Route path="/simulacao" element={
+              <ViewSimulacao />
             }/>
         </Routes>
       </BrowserRouter>

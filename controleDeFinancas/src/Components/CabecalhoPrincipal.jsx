@@ -25,10 +25,7 @@ const CabecalhoPrincipal = () => {
                     <Navbar.Toggle />
                     <Navbar.Collapse className="justify-content-end gap-8 text-white">
                         <Nav.Link as={Link} to="/principal">Inicio</Nav.Link>
-                        <Nav.Link as={Link} to="/receitas">Receitas</Nav.Link>
-                        <Nav.Link as={Link} to="/despesas">Despesas</Nav.Link>
-                        <Nav.Link>Relatorios</Nav.Link>
-                        <Nav.Link>Minha Conta</Nav.Link>
+                        <Nav.Link as={Link} to="/simulacao">Simular</Nav.Link>
                         <Nav.Link onClick={sair}>Sair</Nav.Link>
                     </Navbar.Collapse>
                 </Container>

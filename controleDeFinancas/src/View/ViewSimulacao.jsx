@@ -1,13 +1,14 @@
 import CabecalhoPrincipal from "../Components/CabecalhoPrincipal"
 
 
-
-const ViewDespesas = () => {
+const ViewSimulacao = () => {
 
     return (
         <>
-            <CabecalhoPrincipal />
+            <CabecalhoPrincipal/>
+            
         </>
     )
 }
-export default ViewDespesas
+
+export default ViewSimulacao
