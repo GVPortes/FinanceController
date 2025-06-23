@@ -138,3 +138,22 @@ export const saveUser = async (data, token)=>{
 
     return await response.text();
 }
+
+export const getSimulacoes = async (idUsuario, token)=>{
+    let headersList = {
+    "Accept": "*/*",
+    "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+    "Authorization": `Bearer ${token}`
+    }
+
+    let response = await fetch(`${URL}/simulacoes`, { 
+    method: "GET",
+    headers: headersList
+    });
+
+    let data = ( await response.json()) ;
+    let simulacoesUsuario = data.filter( a => a.idUser == idUsuario)
+
+    return simulacoesUsuario
+
+}

@@ -44,5 +44,17 @@
             "tipo": "Alimentação",
             "idUser": 1
         }
+    ],
+    "simulacoes": [
+        {
+            "id": 1,
+            "descricao": "viagem para estados unidos",
+            "valorTotal": 10000,
+            "tipo": "Viagem",
+            "valorEntrada": 2000,
+            "quantidadePrestacoes": 16,
+            "valorPrestacoes": 500,
+            "idUser": 1
+        }
     ]
 }
