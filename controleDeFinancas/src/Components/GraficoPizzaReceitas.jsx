@@ -17,7 +17,7 @@ const GraficoPizzaReceitas = ({receitas}) => {
             if (item.tipo == "Salario") {
                 setValorSalario(salario += item.valor)
             }
-            if (item.tipo == "Tranferencias") {
+            if (item.tipo == "Transferencias") {
                 setValorTransferencias(transferencias += item.valor)
             }
             if (item.tipo == "Outros") {

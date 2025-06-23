@@ -18,7 +18,7 @@ const HistoricoDeReceitas = ({receitas}) => {
                         <tbody>
                             {receitas.map((item, index) => (
                                 <tr key={index} className="border-b">
-                                    <td className="p-3">{item.nome}</td>
+                                    <td className="p-3">{item.descricao}</td>
                                     <td className="p-3 text-green-600 font-medium">
                                         {item.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                                     </td>

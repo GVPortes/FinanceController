@@ -9,46 +9,34 @@ import GraficoPizzaReceitas from "../Components/GraficoPizzaReceitas";
 import GraficoPizzaDespesas from "../Components/GraficoPizzaDespesas";
 import { useAuth } from "../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import { buscaUserAPI, getDespesas, getReceitas } from "../service/Services";
 
 const ViewPrincipal = () => {
 
-    const {verificaLogin} = useAuth()
+    const {user} = useAuth()
     const navigate = useNavigate()
 
-    useEffect(()=>{
-        if (verificaLogin()) {
-            navigate("/")
+    const [saldo, setSaldo] = useState(0);
+    const [receitas, setReceitas] = useState([]);
+    const [despesas, setDespesas] = useState([]);
+
+    useEffect(() => {
+    const carregarDados = async () => {
+        if (user == null) {
+            navigate("/login");
         } else {
-            localStorage.setItem('saldo', 0)
-            localStorage.setItem('receitas', JSON.stringify([]))
-            localStorage.setItem('despesas', JSON.stringify([]))
+            let receitasBuscadas = await getReceitas(user.id, user.token);
+            let despesasBuscadas = await getDespesas(user.id, user.token);
+            let userBuscado = await buscaUserAPI(user.nome, user.token)
+            
+            setSaldo(userBuscado[0].saldo);
+            setReceitas(receitasBuscadas);
+            setDespesas(despesasBuscadas);
         }
-    },[]);
+    };
 
-    const [saldo, setSaldo] = useState(() => {
-        return parseFloat(localStorage.getItem('saldo')) || 0;
-    });
-    const [receitas, setReceitas] = useState(() => {
-        return JSON.parse(localStorage.getItem('receitas')) || [];
-    });
-    const [despesas, setDespesas] = useState(() => {
-        return JSON.parse(localStorage.getItem('despesas')) || [];
-    });
-
-
-    
-
-    useEffect(()=>{
-        localStorage.setItem('saldo', saldo)
-    },[saldo]);
-
-    useEffect(()=>{
-        localStorage.setItem('receitas', JSON.stringify(receitas))
-    },[receitas]);
-
-    useEffect(()=>{
-        localStorage.setItem('despesas', JSON.stringify(despesas))
-    },[despesas]);
+    carregarDados();
+}, []);
 
     const [mostrarFormularioReceita, setMostrarFormularioReceita] = useState(false);
     const [nomeReceita, setNomeReceita] = useState('');

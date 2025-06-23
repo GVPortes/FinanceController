@@ -13,8 +13,9 @@ const ViewLogin = () => {
 
     const navigate = useNavigate();
 
-    const logar = () => {
-        if (login(nome, senha)) {
+    const logar = async () => {
+        const result = await login(nome, senha)
+        if (result) {
             setNome("")
             setSenha("")
             navigate("/principal")

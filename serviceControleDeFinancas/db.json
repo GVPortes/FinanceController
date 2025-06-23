@@ -4,23 +4,43 @@
             "id": 1,
             "username": "admin",
             "password": "123456",
-            "saldo": "0"
+            "saldo": 0
+        },
+        {
+            "id": 2,
+            "username": "antonio",
+            "password": "123",
+            "saldo": 0
         }
     ],
     "receitas": [
         {
             "id": 1,
             "descricao": "salario 06/2025",
-            "valor": "1000",
+            "valor": 1000,
             "tipo": "Salario",
             "idUser": 1
+        },
+        {
+            "id": 2,
+            "descricao": "Transferecia zezin",
+            "valor": 500,
+            "tipo": "Transferencias",
+            "idUser": 1
+        },
+        {
+            "id": 3,
+            "descricao": "salario 06/2025",
+            "valor": 2500,
+            "tipo": "Salario",
+            "idUser": 2
         }
     ],
     "despesas": [
         {
             "id": 1,
             "descricao": "supermercado 06/2025",
-            "valor": "500",
+            "valor": 500,
             "tipo": "Alimentação",
             "idUser": 1
         }
