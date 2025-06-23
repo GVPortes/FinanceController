@@ -1,0 +1,17 @@
+{
+  "name": "servicecontroledefinancas",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "json-server": "^0.17.3",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
