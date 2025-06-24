@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import CabecalhoPrincipal from "../Components/CabecalhoPrincipal"
 import { useAuth } from "../context/AuthProvider";
-import { getSimulacoes } from "../service/Services";
+import { getSimulacoes, saveSimulacao } from "../service/Services";
 import Button from "react-bootstrap/esm/Button";
 import { useNavigate } from "react-router-dom";
 
@@ -11,46 +11,52 @@ const ViewSimulacao = () => {
     const {user, logout} = useAuth()
     const navigate = useNavigate()
     const [simulacoes, setSimulacoes] = useState([])
-    const [descricao, setDescricao] = useState("")
-    const [valorTotal, setValorTotal] = useState(0)
-    const [tipo, setTipo] = useState("")
-    const [valorEntrada, setValorEntrada] = useState(0)
-    const [quantidadePrestacoes, setQuantidadePrestacoes] = useState(0)
-    // const [simulacao, setSimulacao] = useState({
-    //     "id": 1,
-    //     "descricao": "",
-    //     "valorTotal": "",
-    //     "tipo": "",
-    //     "valorEntrada": "",
-    //     "quantidadePrestacoes": "",
-    //     "idUser": "",
-    // })
+    const [simulacao, setSimulacao] = useState({
+        "descricao": "",
+        "valorTotal": "",
+        "tipo": "",
+        "valorEntrada": "",
+        "quantidadePrestacoes": "",
+        "idUser": user.id,
+    })
 
     useEffect(() => {
         const carregarDados = async () => {
-            let simulacoesBuscadas = await getSimulacoes(user.id, user.token);
+                let simulacoesBuscadas = await getSimulacoes(user.id, user.token);
 
-            if (simulacoesBuscadas == null) {
-                logout()
-                navigate("/login")
-            }
+                if (simulacoesBuscadas == null) {
+                    logout()
+                    navigate("/login")
+                }
 
-            setSimulacoes(simulacoesBuscadas)
+                setSimulacoes(simulacoesBuscadas)
             }
 
         carregarDados();
     }, []);
 
-    const salvarSimulacao = () => {
-        setSimulacoes([...simulacoes, {
-            descricao: descricao,
-            valorTotal: valorTotal,
-            tipo: tipo,
-            valorEntrada: valorEntrada,
-            quantidadePrestacoes: quantidadePrestacoes,
-            valorPrestacoes: ((valorTotal-valorEntrada)/quantidadePrestacoes),
-        }]);
-        
+    const carregarDados = async () => {
+        let simulacoesBuscadas = await getSimulacoes(user.id, user.token);
+
+        if (simulacoesBuscadas == null) {
+            logout()
+            navigate("/login")
+        }
+
+        setSimulacoes(simulacoesBuscadas)
+    }
+
+    const salvarSimulacao = async () => {
+        await saveSimulacao(simulacao, user.token)
+        setSimulacao({
+            "descricao": "",
+            "valorTotal": "",
+            "tipo": "",
+            "valorEntrada": "",
+            "quantidadePrestacoes": "",
+            "idUser": user.id,
+        })
+        await carregarDados()
     }
     return (
         <>
@@ -58,17 +64,17 @@ const ViewSimulacao = () => {
             <div className="flex flex-col items-center justify-center gap-12 mt-10">
                 <div className="flex flex-col gap-2 p-4 rounded-md bg-gray-50 border border-gray-200 mt-2 w-[40rem] ">
                     <h1 className="font-bold">Nova Simulação</h1>
-                    <input type="text" placeholder="Descrição" value={descricao} onChange={e => setDescricao(e.target.value)} className="border p-2 rounded" />
-                    <input type="number" placeholder="Valor Total" value={valorTotal} onChange={e => setValorTotal(e.target.value)} className="border p-2 rounded" />
-                    <select className="border p-2 rounded" onChange={e => setTipo(e.target.value)}>
+                    <input type="text" placeholder="Descrição" value={simulacao.descricao} onChange={(e) => {setSimulacao({...simulacao, "descricao": e.target.value})}} className="border p-2 rounded" />
+                    <input type="number" placeholder="Valor Total" value={simulacao.valorTotal} onChange={(e) => {setSimulacao({...simulacao, "valorTotal": e.target.value})}} className="border p-2 rounded" />
+                    <select className="border p-2 rounded" onChange={(e) => {setSimulacao({...simulacao, "tipo": e.target.value})}}>
                         <option>Tipo</option>
                         <option value="Aluguel">Aposentadoria</option>
                         <option value="Luz/Agua">Viagem</option>
                         <option value="Alimentação">Carro</option>
                         <option value="Outros">Outros</option>
                     </select>
-                    <input type="number" placeholder="Valor Entrada" value={valorEntrada} onChange={e => setValorEntrada(e.target.value)} className="border p-2 rounded" />
-                    <input type="number" placeholder="Quantidade Prestações" value={quantidadePrestacoes} onChange={e => setQuantidadePrestacoes(e.target.value)} className="border p-2 rounded" />
+                    <input type="number" placeholder="Valor Entrada" value={simulacao.valorEntrada} onChange={(e) => {setSimulacao({...simulacao, "valorEntrada": e.target.value})}} className="border p-2 rounded" />
+                    <input type="number" placeholder="Quantidade Prestações" value={simulacao.quantidadePrestacoes} onChange={(e) => {setSimulacao({...simulacao, "quantidadePrestacoes": e.target.value})}} className="border p-2 rounded" />
 
                     <div className="flex gap-2 justify-end mt-2">
                         <Button variant="outline-secondary" size="sm" onClick={salvarSimulacao}>Salvar</Button>
@@ -97,7 +103,7 @@ const ViewSimulacao = () => {
                                     <td className="p-3">{item.tipo}</td>
                                     <td className="p-3">{item.valorEntrada}</td>
                                     <td className="p-3">{item.quantidadePrestacoes}</td>
-                                    <td className="p-3">{item.valorPrestacoes}</td>
+                                    <td className="p-3">{(item.valorTotal-item.valorEntrada)/item.quantidadePrestacoes}</td>
                                 </tr>
                             ))}
                         </tbody>

@@ -173,3 +173,20 @@ export const getSimulacoes = async (idUsuario, token)=>{
     return simulacoesUsuario
 
 }
+
+export const saveSimulacao = async (data, token)=>{
+    let headersList = {
+    "Accept": "*/*",
+    "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+    "Authorization": `Bearer ${token}`,
+    "Content-Type": "application/json"
+    }
+
+    let response = await fetch(`${URL}/simulacoes`, { 
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: headersList
+    });
+
+    return await response.text();
+}

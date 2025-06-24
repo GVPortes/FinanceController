@@ -27,6 +27,13 @@
       "tipo": "Outros",
       "idUser": 1,
       "id": 2
+    },
+    {
+      "descricao": "Salario",
+      "valor": 950,
+      "tipo": "Salario",
+      "idUser": 2,
+      "id": 3
     }
   ],
   "despesas": [
@@ -43,7 +50,42 @@
       "tipo": "Luz/Agua",
       "idUser": 1,
       "id": 2
+    },
+    {
+      "descricao": "Academia",
+      "valor": 100,
+      "tipo": "Outros",
+      "idUser": 2,
+      "id": 3
     }
   ],
-  "simulacoes": []
+  "simulacoes": [
+    {
+      "descricao": "Viagem argentina",
+      "valorTotal": "10000",
+      "tipo": "Luz/Agua",
+      "valorEntrada": "1000",
+      "quantidadePrestacoes": "9",
+      "idUser": 1,
+      "id": 1
+    },
+    {
+      "descricao": "Viagem estados unidos",
+      "valorTotal": "5000",
+      "tipo": "Luz/Agua",
+      "valorEntrada": "500",
+      "quantidadePrestacoes": "2",
+      "idUser": 1,
+      "id": 2
+    },
+    {
+      "descricao": "creta 2025",
+      "valorTotal": "100000",
+      "tipo": "Alimentação",
+      "valorEntrada": "10000",
+      "quantidadePrestacoes": "36",
+      "idUser": 1,
+      "id": 3
+    }
+  ]
 }

@@ -76,7 +76,7 @@ const ViewPrincipal = () => {
     const [mostrarFormularioReceita, setMostrarFormularioReceita] = useState(false);
     const [receita, setReceita] = useState({
         "descricao": "",
-        "valor": 0,
+        "valor": "",
         "tipo": "",
         "idUser": user.id
     })
@@ -84,7 +84,7 @@ const ViewPrincipal = () => {
     const [mostrarFormularioDespesa, setMostrarFormularioDespesa] = useState(false);
     const [despesa, setDesepesa] = useState({
         "descricao": "",
-        "valor": 0,
+        "valor": "",
         "tipo": "",
         "idUser": user.id
     })
@@ -111,7 +111,7 @@ const ViewPrincipal = () => {
         if (despesa.descricao && !isNaN(valorNumerico) && valorNumerico > 0) {
             await saveDespesa(despesa, user.token)
             await carregarDados()
-            fecharFormularioReceita();
+            fecharFormularioDespesa();
         } else {
             alert("Por favor, preencha o nome e um valor válido para a receita.");
         }
