@@ -6,7 +6,7 @@ const bodyParser = require('body-parser')
 const jwt = require('jsonwebtoken')
 
 const SECRET_KEY = 'fsdfDFsdf32425444wREWRwerwer234fsd'
-const expiresIn = '1m'
+const expiresIn = '60m'
 
 function createToken(payload) {
   return jwt.sign(payload, SECRET_KEY, { expiresIn })
