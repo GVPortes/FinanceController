@@ -42,6 +42,11 @@ export const buscaUserAPI = async (login, token)=>{
     headers: headersList
     });
 
+    if (response.status == 401){
+        return null
+    }
+
+
     let usuarios = JSON.parse( await response.text() );
 
     return  usuarios.filter(u => u.username == login)
@@ -61,6 +66,10 @@ export const getReceitas = async (idUsuario, token)=>{
     headers: headersList
     });
 
+    if (response.status == 401){
+        return null
+    }
+
     let data = ( await response.json()) ;
     let receitasUsuario = data.filter( a => a.idUser == idUsuario)
 
@@ -79,6 +88,10 @@ export const getDespesas = async (idUsuario, token)=>{
     method: "GET",
     headers: headersList
     });
+
+    if (response.status == 401){
+        return null
+    }
 
     let data = ( await response.json()) ;
     let despesasUsuario = data.filter( a => a.idUser == idUsuario)
@@ -150,6 +163,10 @@ export const getSimulacoes = async (idUsuario, token)=>{
     method: "GET",
     headers: headersList
     });
+
+    if (response.status == 401){
+        return null
+    }
 
     let data = ( await response.json()) ;
     let simulacoesUsuario = data.filter( a => a.idUser == idUsuario)

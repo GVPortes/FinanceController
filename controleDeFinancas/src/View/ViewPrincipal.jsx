@@ -13,7 +13,7 @@ import { buscaUserAPI, getDespesas, getReceitas, saveDespesa, saveReceita } from
 
 const ViewPrincipal = () => {
 
-    const {user} = useAuth()
+    const {user, logout} = useAuth()
     const navigate = useNavigate()
 
     const [saldo, setSaldo] = useState(0);
@@ -29,8 +29,14 @@ const ViewPrincipal = () => {
                 let receitasBuscadas = await getReceitas(user.id, user.token);
                 let despesasBuscadas = await getDespesas(user.id, user.token);
                 let userBuscado = await buscaUserAPI(user.nome, user.token)
-                let saldo = userBuscado[0].saldo
+                
 
+                if (receitasBuscadas == null || despesasBuscadas == null || userBuscado == null) {
+                    logout()
+                    navigate("/login");
+                }
+
+                let saldo = userBuscado[0].saldo
                 receitasBuscadas.forEach(item => {
                     saldo += item.valor
                 });
