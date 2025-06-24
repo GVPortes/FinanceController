@@ -1,60 +1,49 @@
 {
-    "users": [
-        {
-            "id": 1,
-            "username": "admin",
-            "password": "123456",
-            "saldo": 0
-        },
-        {
-            "id": 2,
-            "username": "antonio",
-            "password": "123",
-            "saldo": 0
-        }
-    ],
-    "receitas": [
-        {
-            "id": 1,
-            "descricao": "salario 06/2025",
-            "valor": 1000,
-            "tipo": "Salario",
-            "idUser": 1
-        },
-        {
-            "id": 2,
-            "descricao": "Transferecia zezin",
-            "valor": 500,
-            "tipo": "Transferencias",
-            "idUser": 1
-        },
-        {
-            "id": 3,
-            "descricao": "salario 06/2025",
-            "valor": 2500,
-            "tipo": "Salario",
-            "idUser": 2
-        }
-    ],
-    "despesas": [
-        {
-            "id": 1,
-            "descricao": "supermercado 06/2025",
-            "valor": 500,
-            "tipo": "Alimentação",
-            "idUser": 1
-        }
-    ],
-    "simulacoes": [
-        {
-            "id": 1,
-            "descricao": "viagem para estados unidos",
-            "valorTotal": 10000,
-            "tipo": "Viagem",
-            "valorEntrada": 2000,
-            "quantidadePrestacoes": 16,
-            "valorPrestacoes": 500,
-            "idUser": 1
-        }
-    ]
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password": "123456",
+      "saldo": 0
+    },
+    {
+      "id": 2,
+      "username": "antonio",
+      "password": "123",
+      "saldo": 0
+    }
+  ],
+  "receitas": [
+    {
+      "descricao": "salario 06/2025",
+      "valor": 950,
+      "tipo": "Salario",
+      "idUser": 1,
+      "id": 1
+    },
+    {
+      "descricao": "Bonus",
+      "valor": 2000,
+      "tipo": "Outros",
+      "idUser": 1,
+      "id": 2
+    }
+  ],
+  "despesas": [
+    {
+      "descricao": "supermercado 06/2025",
+      "valor": 1000,
+      "tipo": "Alimentação",
+      "idUser": 1,
+      "id": 1
+    },
+    {
+      "descricao": "Luz 06/2025",
+      "valor": 200,
+      "tipo": "Luz/Agua",
+      "idUser": 1,
+      "id": 2
+    }
+  ],
+  "simulacoes": []
 }

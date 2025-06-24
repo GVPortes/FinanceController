@@ -35,7 +35,6 @@ export const AuthProvider = ( {children} )=>{
                 token: resp.access_token
             }
             setUser(u)
-            console.log(u)
             return true
         }   
     

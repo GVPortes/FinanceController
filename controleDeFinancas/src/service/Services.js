@@ -24,7 +24,6 @@ export const loginService = async (login, senha)=>{
     }
 
     let data = await response.text();
-    console.log(data)
     return  JSON.parse(data)
 }
 

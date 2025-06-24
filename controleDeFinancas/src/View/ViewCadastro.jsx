@@ -3,23 +3,33 @@ import Form from 'react-bootstrap/Form';
 import CabecalhoHome from '../components/CabecalhoHome';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthProvider';
-import { saveUser } from '../service/Services';
+import { loginService, saveUser } from '../service/Services';
+import { useEffect } from 'react';
 
 const ViewCadastro = () => {
 
     const navigate = useNavigate()
-    const {user} = useAuth()
+    const [token, setToken] = useState()
+
+    useEffect(() => {
+        const cadastrarAdmin = async () => {
+            let resp = await loginService("admin", "123456")
+            setToken(resp.access_token)
+        }
+
+        cadastrarAdmin()
+        
+    }, [])
 
     const [dados, setDados] = useState({
-        "id": 3,
         "username": "",
         "password": "",
-        "saldo": 0   
+        "saldo": 0
     })
 
     const buttonCadastrar = async () => {
-        await saveUser(dados, user.token)
+        console.log(token)
+        await saveUser(dados, token)
         navigate("/login")
     }
 

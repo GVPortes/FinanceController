@@ -74,80 +74,52 @@ const ViewPrincipal = () => {
     };
 
     const [mostrarFormularioReceita, setMostrarFormularioReceita] = useState(false);
-    const [nomeReceita, setNomeReceita] = useState('');
-    const [valorReceita, setValorReceita] = useState('');
-    const [tipoReceita, setTipoReceita] = useState('');
     const [receita, setReceita] = useState({
-        "id": 1,
         "descricao": "",
         "valor": 0,
         "tipo": "",
-        "idUser": 0
+        "idUser": user.id
     })
 
     const [mostrarFormularioDespesa, setMostrarFormularioDespesa] = useState(false);
-    const [nomeDespesa, setNomeDespesa] = useState('');
-    const [valorDespesa, setValorDespesa] = useState('');
-    const [tipoDespesa, setTipoDespesa] = useState('');
     const [despesa, setDesepesa] = useState({
-        "id": 1,
         "descricao": "",
         "valor": 0,
         "tipo": "",
-        "idUser": 0
+        "idUser": user.id
     })
 
 
     const adicionarReceita = async () => {
-        const valorNumerico = parseFloat(valorReceita);
-        if (nomeReceita && !isNaN(valorNumerico) && valorNumerico > 0) {
-            setSaldo(saldo + valorNumerico);
-            setReceitas([...receitas, { nome: nomeReceita, valor: valorNumerico, tipo: tipoReceita}]);
+        const valorNumerico = parseFloat(receita.valor);
+        if (receita.descricao && !isNaN(valorNumerico) && valorNumerico > 0) {
+            await saveReceita(receita, user.token)
+            await carregarDados()
             fecharFormularioReceita();
         } else {
             alert("Por favor, preencha o nome e um valor válido para a receita.");
         }
-        // setReceita({...receita, "idUser": user.id})
-        // const valorNumerico = parseFloat(receita.valor);
-        // if (receita.descricao && !isNaN(valorNumerico) && valorNumerico > 0) {
-        //     await saveReceita(receita, user.token)
-        //     carregarDados()
-        //     fecharFormularioReceita();
-        // } else {
-        //     alert("Por favor, preencha o nome e um valor válido para a receita.");
-        // }
     };
 
     const fecharFormularioReceita = () => {
         setMostrarFormularioReceita(false);
-        setNomeReceita('');
-        setValorReceita('');
+        setReceita({...receita, "descricao": "", "valor": "", "tipo": ""})
     };
 
     const adicionarDespesa = async () => {
-        const valorNumerico = parseFloat(valorDespesa);
-        if (nomeDespesa && !isNaN(valorNumerico) && valorNumerico > 0) {
-            setSaldo(saldo - valorNumerico);
-            setDespesas([...despesas, { nome: nomeDespesa, valor: valorNumerico, tipo: tipoDespesa }]);
-            fecharFormularioDespesa();
+        const valorNumerico = parseFloat(despesa.valor);
+        if (despesa.descricao && !isNaN(valorNumerico) && valorNumerico > 0) {
+            await saveDespesa(despesa, user.token)
+            await carregarDados()
+            fecharFormularioReceita();
         } else {
-            alert("Por favor, preencha o nome e um valor válido para a despesa.");
+            alert("Por favor, preencha o nome e um valor válido para a receita.");
         }
-        // setDesepesa({...despesa, "idUser": user.id})
-        // const valorNumerico = parseFloat(despesa.valor);
-        // if (despesa.descricao && !isNaN(valorNumerico) && valorNumerico > 0) {
-        //     await saveDespesa(despesa, user.token)
-        //     carregarDados()
-        //     fecharFormularioReceita();
-        // } else {
-        //     alert("Por favor, preencha o nome e um valor válido para a receita.");
-        // }
     };
 
     const fecharFormularioDespesa = () => {
         setMostrarFormularioDespesa(false);
-        setNomeDespesa('');
-        setValorDespesa('');
+        setDesepesa({...despesa, "descricao": "", "valor": "", "tipo": ""})
     };
 
     return (
@@ -176,22 +148,14 @@ const ViewPrincipal = () => {
                             {mostrarFormularioReceita && (
                                 <div className="flex flex-col gap-2 p-4 rounded-md bg-green-50 border border-green-200 mt-2">
                                     <h3 className="font-bold">Nova Receita</h3>
-                                    <input type="text" placeholder="Descrição" value={nomeReceita} onChange={e => setNomeReceita(e.target.value)} className="border p-2 rounded" />
-                                    <input type="number" placeholder="Valor" value={valorReceita} onChange={e => setValorReceita(e.target.value)} className="border p-2 rounded" />
-                                    <select className="border p-2 rounded" onChange={e => setTipoReceita(e.target.value)}>
-                                        <option>Tipo</option>
-                                        <option value="Salario">Salario</option>
-                                        <option value="Tranferencias">Tranferencias</option>
-                                        <option value="Outros">Outros</option>
-                                    </select>
-                                    {/* <input type="text" placeholder="Descrição" value={receita.descricao} onChange={(e) => {setReceita({...receita, "descricao": e.target.value})}} className="border p-2 rounded" />
-                                    <input type="number" placeholder="Valor" value={receita.valor} onChange={(e) => {setReceita({...receita, "valor": e.target.value})}} className="border p-2 rounded" />
+                                    <input type="text" placeholder="Descrição" value={receita.descricao} onChange={(e) => {setReceita({...receita, "descricao": e.target.value})}} className="border p-2 rounded" />
+                                    <input type="number" placeholder="Valor" value={receita.valor} onChange={(e) => {setReceita({...receita, "valor": parseInt(e.target.value)})}} className="border p-2 rounded" />
                                     <select className="border p-2 rounded" value={receita.tipo} onChange={(e) => {setReceita({...receita, "tipo": e.target.value})}}>
                                         <option>Tipo</option>
                                         <option value="Salario">Salario</option>
                                         <option value="Tranferencias">Tranferencias</option>
                                         <option value="Outros">Outros</option>
-                                    </select> */}
+                                    </select>
                                     <div className="flex gap-2 justify-end mt-2">
                                         <Button variant="outline-success" size="sm" onClick={adicionarReceita}>Salvar</Button>
                                         <Button variant="outline-secondary" size="sm" onClick={fecharFormularioReceita}>Cancelar</Button>
@@ -202,24 +166,15 @@ const ViewPrincipal = () => {
                             {mostrarFormularioDespesa && (
                                 <div className="flex flex-col gap-2 p-4 rounded-md bg-red-50 border border-red-200 mt-2">
                                     <h3 className="font-bold">Nova Despesa</h3>
-                                    <input type="text" placeholder="Descrição" value={nomeDespesa} onChange={e => setNomeDespesa(e.target.value)} className="border p-2 rounded" />
-                                    <input type="number" placeholder="Valor" value={valorDespesa} onChange={e => setValorDespesa(e.target.value)} className="border p-2 rounded" />
-                                    <select className="border p-2 rounded" onChange={e => setTipoDespesa(e.target.value)}>
-                                        <option>Tipo</option>
-                                        <option value="Aluguel">Aluguel</option>
-                                        <option value="Luz/Agua">Luz/Agua</option>
-                                        <option value="Alimentação">Alimentação</option>
-                                        <option value="Outros">Outros</option>
-                                    </select>
-                                    {/* <input type="text" placeholder="Descrição" value={despesa.descricao} onChange={(e) => {setDesepesa({...despesa, "descricao": e.target.value})}} className="border p-2 rounded" />
-                                    <input type="number" placeholder="Valor" value={despesa.valor} onChange={(e) => {setDesepesa({...despesa, "valor": e.target.value})}} className="border p-2 rounded" />
+                                    <input type="text" placeholder="Descrição" value={despesa.descricao} onChange={(e) => {setDesepesa({...despesa, "descricao": e.target.value})}} className="border p-2 rounded" />
+                                    <input type="number" placeholder="Valor" value={despesa.valor} onChange={(e) => {setDesepesa({...despesa, "valor": parseInt(e.target.value)})}} className="border p-2 rounded" />
                                     <select className="border p-2 rounded" value={despesa.tipo} onChange={(e) => {setDesepesa({...despesa, "tipo": e.target.value})}}>
                                         <option>Tipo</option>
                                         <option value="Aluguel">Aluguel</option>
                                         <option value="Luz/Agua">Luz/Agua</option>
                                         <option value="Alimentação">Alimentação</option>
                                         <option value="Outros">Outros</option>
-                                    </select> */}
+                                    </select>
                                     <div className="flex gap-2 justify-end mt-2">
                                         <Button variant="outline-danger" size="sm" onClick={adicionarDespesa}>Salvar</Button>
                                         <Button variant="outline-secondary" size="sm" onClick={fecharFormularioDespesa}>Cancelar</Button>
