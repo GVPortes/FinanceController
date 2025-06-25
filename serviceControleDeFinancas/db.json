@@ -22,7 +22,7 @@
   "receitas": [
     {
       "descricao": "Salario",
-      "valor": 4000,
+      "valor": 1000,
       "tipo": "Salario",
       "idUser": 1,
       "id": 1
@@ -35,6 +35,13 @@
       "tipo": "Outros",
       "idUser": 2,
       "id": 3
+    },
+    {
+      "descricao": "Luz",
+      "valor": 200,
+      "tipo": "Luz/Agua",
+      "idUser": 1,
+      "id": 4
     }
   ],
   "simulacoes": [
