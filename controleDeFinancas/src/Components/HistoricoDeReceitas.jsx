@@ -3,13 +3,13 @@ import { deleteReceita } from "../service/Services"
 import { useAuth } from "../context/AuthProvider"
 
 
-const HistoricoDeReceitas = ({receitas, carregarDados}) => {
+const HistoricoDeReceitas = ({receitas}) => {
 
     const {user} = useAuth()
 
     const deletar = async (id) => {
         await deleteReceita(id, user.token)
-        carregarDados()
+        window.location.reload();
     }
 
     return (

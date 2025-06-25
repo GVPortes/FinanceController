@@ -185,8 +185,8 @@ const ViewPrincipal = () => {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 ">
-                        <HistoricoDeReceitas receitas={receitas} carregarDados={carregarDados}/>
-                        <HistoricoDeDespesas despesas={despesas} carregarDados={carregarDados}/>
+                        <HistoricoDeReceitas receitas={receitas}/>
+                        <HistoricoDeDespesas despesas={despesas}/>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

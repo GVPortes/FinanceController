@@ -21,11 +21,11 @@
   ],
   "receitas": [
     {
-      "descricao": "Salario",
-      "valor": 1000,
+      "descricao": "Salario 2",
+      "valor": 1500,
       "tipo": "Salario",
       "idUser": 1,
-      "id": 1
+      "id": 2
     }
   ],
   "despesas": [
@@ -35,13 +35,6 @@
       "tipo": "Outros",
       "idUser": 2,
       "id": 3
-    },
-    {
-      "descricao": "Luz",
-      "valor": 200,
-      "tipo": "Luz/Agua",
-      "idUser": 1,
-      "id": 4
     }
   ],
   "simulacoes": [
