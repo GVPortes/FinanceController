@@ -1,6 +1,16 @@
+import Button from "react-bootstrap/esm/Button"
+import { deleteReceita } from "../service/Services"
+import { useAuth } from "../context/AuthProvider"
 
 
-const HistoricoDeReceitas = ({receitas}) => {
+const HistoricoDeReceitas = ({receitas, carregarDados}) => {
+
+    const {user} = useAuth()
+
+    const deletar = async (id) => {
+        await deleteReceita(id, user.token)
+        carregarDados()
+    }
 
     return (
         <div className="bg-white p-6 rounded-lg shadow">
@@ -13,6 +23,7 @@ const HistoricoDeReceitas = ({receitas}) => {
                                 <th className="p-3 text-left font-semibold">Descrição</th>
                                 <th className="p-3 text-right font-semibold">Valor</th>
                                 <th className="p-3 text-right font-semibold">Tipo</th>
+                                <th className="p-3 text-right font-semibold">Deletar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -23,6 +34,7 @@ const HistoricoDeReceitas = ({receitas}) => {
                                         {item.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                                     </td>
                                     <td className="p-3">{item.tipo}</td>
+                                    <td className="p-3"><Button variant="danger" onClick={() => deletar(item.id)}>X</Button></td>
                                 </tr>
                             ))}
                         </tbody>

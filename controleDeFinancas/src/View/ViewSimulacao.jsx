@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import CabecalhoPrincipal from "../Components/CabecalhoPrincipal"
 import { useAuth } from "../context/AuthProvider";
-import { getSimulacoes, saveSimulacao } from "../service/Services";
+import { deleteSimulacoes, getSimulacoes, saveSimulacao } from "../service/Services";
 import Button from "react-bootstrap/esm/Button";
 import { useNavigate } from "react-router-dom";
 
@@ -19,6 +19,11 @@ const ViewSimulacao = () => {
         "quantidadePrestacoes": "",
         "idUser": user.id,
     })
+
+    const deletar = async (id) => {
+        await deleteSimulacoes(id, user.token)
+        carregarDados()
+    }
 
     useEffect(() => {
         const carregarDados = async () => {
@@ -91,6 +96,7 @@ const ViewSimulacao = () => {
                                 <th className="p-3 text-right font-semibold">Valor Entrada</th>
                                 <th className="p-3 text-right font-semibold">Quantidade Prestações</th>
                                 <th className="p-3 text-right font-semibold">Valor Prestações</th>
+                                <th className="p-3 text-right font-semibold">Deletar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -104,6 +110,7 @@ const ViewSimulacao = () => {
                                     <td className="p-3">{item.valorEntrada}</td>
                                     <td className="p-3">{item.quantidadePrestacoes}</td>
                                     <td className="p-3">{(item.valorTotal-item.valorEntrada)/item.quantidadePrestacoes}</td>
+                                    <td className="p-3"><Button variant="danger" onClick={() => deletar(item.id)}>X</Button></td>
                                 </tr>
                             ))}
                         </tbody>

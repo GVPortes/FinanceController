@@ -190,3 +190,51 @@ export const saveSimulacao = async (data, token)=>{
 
     return await response.text();
 }
+
+export const deleteReceita = async (id, token)=>{
+    let headersList = {
+    "Accept": "*/*",
+    "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+    "Authorization": `Bearer ${token}`,
+    "Content-Type": "application/json"
+    }
+
+    let response = await fetch(`${URL}/receitas/${id}`, { 
+        method: "DELETE",
+        headers: headersList
+    });
+
+    return await response.text();
+}
+
+export const deleteDespesa = async (id, token)=>{
+    let headersList = {
+    "Accept": "*/*",
+    "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+    "Authorization": `Bearer ${token}`,
+    "Content-Type": "application/json"
+    }
+
+    let response = await fetch(`${URL}/despesas/${id}`, { 
+        method: "DELETE",
+        headers: headersList
+    });
+
+    return await response.text();
+}
+
+export const deleteSimulacoes = async (id, token)=>{
+    let headersList = {
+    "Accept": "*/*",
+    "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+    "Authorization": `Bearer ${token}`,
+    "Content-Type": "application/json"
+    }
+
+    let response = await fetch(`${URL}/simulacoes/${id}`, { 
+        method: "DELETE",
+        headers: headersList
+    });
+
+    return await response.text();
+}
